@@ -1,6 +1,43 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  _originContract: Bytes! # address
-  _bidder: Bytes! # address
+type Seller @entity(immutable: true) {
+	address: Bytes!
+}
+type Buyer @entity(immutable: true) {
+	address: Bytes!
+}
+type Bidder @entity(immutable: true) {
+	address: Bytes!
+}
+type AuctionCreator @entity(immutable: true) {
+	address: Bytes!
+}
+type Offer @entity(immutable: true) {
+	id: Bytes!
+	originContract: Bytes!
+	seller: Seller
+	bidder: Bytes
+	amount: BigInt
+	timestamp: BigInt
+	tokenId: BigInt!
+	convertible: Boolean
+}
+type Auction @entity(immutable: true) {
+	id: Bytes!
+	contractAddress: Bytes!
+	auctionCreator: AuctionCreator!
+	startingTime: BigInt
+	lengthOfAuction: BigInt
+	currencyAddress: Bytes
+	tokenId: BigInt
+	minimumBid: BigInt
+	seller: Seller
+	bidder: Bidder
+	amount: BigInt
+	startedAuction: Boolean
+}
+
+type Bid @entity(immutable: true) {
+	id: Bytes
+	bidder: Bidder!
+	auction: Auction
+	amount: BigInt
 }
