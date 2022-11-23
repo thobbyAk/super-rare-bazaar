@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class Account extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,18 +19,18 @@ export class ExampleEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save Account entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Account must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("Account", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): Account | null {
+    return changetype<Account | null>(store.get("Account", id));
   }
 
   get id(): string {
@@ -42,30 +42,801 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
+  get address(): Bytes {
+    let value = this.get("address");
+    return value!.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
+  }
+}
+
+export class OfferLog extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OfferLog entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OfferLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("OfferLog", id.toString(), this);
+    }
+  }
+
+  static load(id: string): OfferLog | null {
+    return changetype<OfferLog | null>(store.get("OfferLog", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get originContract(): Bytes | null {
+    let value = this.get("originContract");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set originContract(value: Bytes | null) {
+    if (!value) {
+      this.unset("originContract");
+    } else {
+      this.set("originContract", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get seller(): string | null {
+    let value = this.get("seller");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set seller(value: string | null) {
+    if (!value) {
+      this.unset("seller");
+    } else {
+      this.set("seller", Value.fromString(<string>value));
+    }
+  }
+
+  get bidder(): string {
+    let value = this.get("bidder");
+    return value!.toString();
+  }
+
+  set bidder(value: string) {
+    this.set("bidder", Value.fromString(value));
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
     return value!.toBigInt();
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 
-  get _originContract(): Bytes {
-    let value = this.get("_originContract");
-    return value!.toBytes();
+  get convertible(): boolean {
+    let value = this.get("convertible");
+    return value!.toBoolean();
   }
 
-  set _originContract(value: Bytes) {
-    this.set("_originContract", Value.fromBytes(value));
+  set convertible(value: boolean) {
+    this.set("convertible", Value.fromBoolean(value));
+  }
+}
+
+export class AuctionLogSnapshot extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
   }
 
-  get _bidder(): Bytes {
-    let value = this.get("_bidder");
-    return value!.toBytes();
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AuctionLogSnapshot entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AuctionLogSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AuctionLogSnapshot", id.toString(), this);
+    }
   }
 
-  set _bidder(value: Bytes) {
-    this.set("_bidder", Value.fromBytes(value));
+  static load(id: string): AuctionLogSnapshot | null {
+    return changetype<AuctionLogSnapshot | null>(
+      store.get("AuctionLogSnapshot", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get contractAddress(): Bytes | null {
+    let value = this.get("contractAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set contractAddress(value: Bytes | null) {
+    if (!value) {
+      this.unset("contractAddress");
+    } else {
+      this.set("contractAddress", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get auctionCreator(): string {
+    let value = this.get("auctionCreator");
+    return value!.toString();
+  }
+
+  set auctionCreator(value: string) {
+    this.set("auctionCreator", Value.fromString(value));
+  }
+
+  get currencyAddress(): Bytes | null {
+    let value = this.get("currencyAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set currencyAddress(value: Bytes | null) {
+    if (!value) {
+      this.unset("currencyAddress");
+    } else {
+      this.set("currencyAddress", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get tokenId(): BigInt | null {
+    let value = this.get("tokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tokenId(value: BigInt | null) {
+    if (!value) {
+      this.unset("tokenId");
+    } else {
+      this.set("tokenId", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get minimumBid(): BigInt | null {
+    let value = this.get("minimumBid");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set minimumBid(value: BigInt | null) {
+    if (!value) {
+      this.unset("minimumBid");
+    } else {
+      this.set("minimumBid", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get seller(): string | null {
+    let value = this.get("seller");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set seller(value: string | null) {
+    if (!value) {
+      this.unset("seller");
+    } else {
+      this.set("seller", Value.fromString(<string>value));
+    }
+  }
+
+  get bidder(): string | null {
+    let value = this.get("bidder");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set bidder(value: string | null) {
+    if (!value) {
+      this.unset("bidder");
+    } else {
+      this.set("bidder", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get startedAuction(): boolean {
+    let value = this.get("startedAuction");
+    return value!.toBoolean();
+  }
+
+  set startedAuction(value: boolean) {
+    this.set("startedAuction", Value.fromBoolean(value));
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class OfferLogSnapshot extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OfferLogSnapshot entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OfferLogSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("OfferLogSnapshot", id.toString(), this);
+    }
+  }
+
+  static load(id: string): OfferLogSnapshot | null {
+    return changetype<OfferLogSnapshot | null>(
+      store.get("OfferLogSnapshot", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get originContract(): Bytes | null {
+    let value = this.get("originContract");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set originContract(value: Bytes | null) {
+    if (!value) {
+      this.unset("originContract");
+    } else {
+      this.set("originContract", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get seller(): string | null {
+    let value = this.get("seller");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set seller(value: string | null) {
+    if (!value) {
+      this.unset("seller");
+    } else {
+      this.set("seller", Value.fromString(<string>value));
+    }
+  }
+
+  get bidder(): string {
+    let value = this.get("bidder");
+    return value!.toString();
+  }
+
+  set bidder(value: string) {
+    this.set("bidder", Value.fromString(value));
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
+    return value!.toBigInt();
+  }
+
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
+  }
+
+  get convertible(): boolean {
+    let value = this.get("convertible");
+    return value!.toBoolean();
+  }
+
+  set convertible(value: boolean) {
+    this.set("convertible", Value.fromBoolean(value));
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class BidLogSnapshot extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save BidLogSnapshot entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type BidLogSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("BidLogSnapshot", id.toString(), this);
+    }
+  }
+
+  static load(id: string): BidLogSnapshot | null {
+    return changetype<BidLogSnapshot | null>(store.get("BidLogSnapshot", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get bidder(): string {
+    let value = this.get("bidder");
+    return value!.toString();
+  }
+
+  set bidder(value: string) {
+    this.set("bidder", Value.fromString(value));
+  }
+
+  get auction(): string {
+    let value = this.get("auction");
+    return value!.toString();
+  }
+
+  set auction(value: string) {
+    this.set("auction", Value.fromString(value));
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tokenId(): BigInt | null {
+    let value = this.get("tokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tokenId(value: BigInt | null) {
+    if (!value) {
+      this.unset("tokenId");
+    } else {
+      this.set("tokenId", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class AuctionLog extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AuctionLog entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AuctionLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AuctionLog", id.toString(), this);
+    }
+  }
+
+  static load(id: string): AuctionLog | null {
+    return changetype<AuctionLog | null>(store.get("AuctionLog", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get contractAddress(): Bytes | null {
+    let value = this.get("contractAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set contractAddress(value: Bytes | null) {
+    if (!value) {
+      this.unset("contractAddress");
+    } else {
+      this.set("contractAddress", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get auctionCreator(): string | null {
+    let value = this.get("auctionCreator");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set auctionCreator(value: string | null) {
+    if (!value) {
+      this.unset("auctionCreator");
+    } else {
+      this.set("auctionCreator", Value.fromString(<string>value));
+    }
+  }
+
+  get currencyAddress(): Bytes | null {
+    let value = this.get("currencyAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set currencyAddress(value: Bytes | null) {
+    if (!value) {
+      this.unset("currencyAddress");
+    } else {
+      this.set("currencyAddress", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get tokenId(): BigInt | null {
+    let value = this.get("tokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tokenId(value: BigInt | null) {
+    if (!value) {
+      this.unset("tokenId");
+    } else {
+      this.set("tokenId", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get minimumBid(): BigInt | null {
+    let value = this.get("minimumBid");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set minimumBid(value: BigInt | null) {
+    if (!value) {
+      this.unset("minimumBid");
+    } else {
+      this.set("minimumBid", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get seller(): string | null {
+    let value = this.get("seller");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set seller(value: string | null) {
+    if (!value) {
+      this.unset("seller");
+    } else {
+      this.set("seller", Value.fromString(<string>value));
+    }
+  }
+
+  get bidder(): string | null {
+    let value = this.get("bidder");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set bidder(value: string | null) {
+    if (!value) {
+      this.unset("bidder");
+    } else {
+      this.set("bidder", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get startedAuction(): boolean {
+    let value = this.get("startedAuction");
+    return value!.toBoolean();
+  }
+
+  set startedAuction(value: boolean) {
+    this.set("startedAuction", Value.fromBoolean(value));
+  }
+}
+
+export class BidLog extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save BidLog entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type BidLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("BidLog", id.toString(), this);
+    }
+  }
+
+  static load(id: string): BidLog | null {
+    return changetype<BidLog | null>(store.get("BidLog", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get bidder(): string {
+    let value = this.get("bidder");
+    return value!.toString();
+  }
+
+  set bidder(value: string) {
+    this.set("bidder", Value.fromString(value));
+  }
+
+  get auction(): string {
+    let value = this.get("auction");
+    return value!.toString();
+  }
+
+  set auction(value: string) {
+    this.set("auction", Value.fromString(value));
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tokenId(): BigInt | null {
+    let value = this.get("tokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tokenId(value: BigInt | null) {
+    if (!value) {
+      this.unset("tokenId");
+    } else {
+      this.set("tokenId", Value.fromBigInt(<BigInt>value));
+    }
   }
 }
