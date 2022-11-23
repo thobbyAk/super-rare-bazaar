@@ -46,7 +46,7 @@ type BidLogSnapshot @entity {
 }
 type AuctionLog @entity {
 	id: ID!
-	contractAddress: Bytes
+	contractAddress: Bytes!
 	auctionCreator: Account
 	currencyAddress: Bytes
 	tokenId: BigInt

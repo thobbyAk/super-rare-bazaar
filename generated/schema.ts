@@ -611,21 +611,13 @@ export class AuctionLog extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get contractAddress(): Bytes | null {
+  get contractAddress(): Bytes {
     let value = this.get("contractAddress");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set contractAddress(value: Bytes | null) {
-    if (!value) {
-      this.unset("contractAddress");
-    } else {
-      this.set("contractAddress", Value.fromBytes(<Bytes>value));
-    }
+  set contractAddress(value: Bytes) {
+    this.set("contractAddress", Value.fromBytes(value));
   }
 
   get auctionCreator(): string | null {
