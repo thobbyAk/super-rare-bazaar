@@ -6,19 +6,19 @@ export function createAuction(contractAddress: Address,auctionCreator:Account, t
     let auction = AuctionLog.load(id)
     if(auction == null){
         auction = new AuctionLog(contractAddress.toHexString().concat('-').concat(tokenId.toString()))
-        auction.auctionCreator = auctionCreator.id
-        auction.contractAddress = contractAddress
-        auction.minimumBid = minimumBid
-        auction.tokenId = tokenId
-        auction.currencyAddress = currencyAddress
+        auction.auctionCreator = auctionCreator.id;
+        auction.contractAddress = contractAddress;
+        auction.minimumBid = minimumBid;
+        auction.tokenId = tokenId;
+        auction.currencyAddress = currencyAddress;
         auction.save();
     }
 
-    return auction as AuctionLog
+    return auction 
 }   
 
-export function getAuction (contractAddress: Address, tokenId:BigInt): AuctionLog{
+export function getAuction (contractAddress: Address, tokenId:BigInt): AuctionLog | null{
     let id = contractAddress.toHexString().concat('-').concat(tokenId.toString())
     let auction = AuctionLog.load(id)
-    return auction as AuctionLog
+    return auction 
 }

@@ -1,50 +1,51 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+ file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: Contract
-    network: mainnet
-    source:
-      address: "0x6D7c44773C52D396F43c2D511B81aa168E9a7a42"
-      abi: Contract
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - AcceptOffer
-        - AuctionBid
-        - AuctionSettled
-        - CancelAuction
-        - CancelOffer
-        - NewAuction
-        - OfferPlaced
-        - OwnershipTransferred
-        - SetSalePrice
-        - Sold
-      abis:
-        - name: Contract
-          file: ./abis/Contract.json
-      eventHandlers:
-        - event: AcceptOffer(indexed address,indexed address,indexed address,address,uint256,uint256,address[],uint8[])
-          handler: handleAcceptOffer
-        - event: AuctionBid(indexed address,indexed address,indexed uint256,address,uint256,bool,uint256,address)
-          handler: handleAuctionBid
-        - event: AuctionSettled(indexed address,indexed address,address,indexed uint256,address,uint256)
-          handler: handleAuctionSettled
-        - event: CancelAuction(indexed address,indexed uint256,indexed address)
-          handler: handleCancelAuction
-        - event: CancelOffer(indexed address,indexed address,indexed address,uint256,uint256)
-          handler: handleCancelOffer
-        - event: NewAuction(indexed address,indexed uint256,indexed address,address,uint256,uint256,uint256)
-          handler: handleNewAuction
-        - event: OfferPlaced(indexed address,indexed address,indexed address,uint256,uint256,bool)
-          handler: handleOfferPlaced
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: SetSalePrice(indexed address,indexed address,address,uint256,uint256,address[],uint8[])
-          handler: handleSetSalePrice
-        - event: Sold(indexed address,indexed address,indexed address,address,uint256,uint256)
-          handler: handleSold
-      file: ./src/contract.ts
+ - kind: ethereum
+   name: Contract
+   network: mainnet
+   source:
+    address: "0x6D7c44773C52D396F43c2D511B81aa168E9a7a42"
+    abi: Contract
+    startBlock: 14166744
+   mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.7
+    language: wasm/assemblyscript
+    entities:
+     - AcceptOffer
+     - AuctionBid
+     - AuctionSettled
+     - CancelAuction
+     - CancelOffer
+     - NewAuction
+     - OfferPlaced
+     - OwnershipTransferred
+     - SetSalePrice
+     - Sold
+    abis:
+     - name: Contract
+       file: ./abis/Contract.json
+    eventHandlers:
+     - event: AcceptOffer(indexed address,indexed address,indexed address,address,uint256,uint256,address[],uint8[])
+       handler: handleAcceptOffer
+     - event: AuctionBid(indexed address,indexed address,indexed uint256,address,uint256,bool,uint256,address)
+       handler: handleAuctionBid
+     - event: AuctionSettled(indexed address,indexed address,address,indexed uint256,address,uint256)
+       handler: handleAuctionSettled
+     - event: CancelAuction(indexed address,indexed uint256,indexed address)
+       handler: handleCancelAuction
+     - event: CancelOffer(indexed address,indexed address,indexed address,uint256,uint256)
+       handler: handleCancelOffer
+     - event: NewAuction(indexed address,indexed uint256,indexed address,address,uint256,uint256,uint256)
+       handler: handleNewAuction
+     - event: OfferPlaced(indexed address,indexed address,indexed address,uint256,uint256,bool)
+       handler: handleOfferPlaced
+     - event: OwnershipTransferred(indexed address,indexed address)
+       handler: handleOwnershipTransferred
+     - event: SetSalePrice(indexed address,indexed address,address,uint256,uint256,address[],uint8[])
+       handler: handleSetSalePrice
+     - event: Sold(indexed address,indexed address,indexed address,address,uint256,uint256)
+       handler: handleSold
+    file: ./src/contract.ts

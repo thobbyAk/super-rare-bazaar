@@ -31,6 +31,7 @@ export function handleOfferPlaced(event: OfferPlaced): void {
     let offer = createOffer (event.params._originContract, event.params._tokenId,bidder, event.params._amount, event.params._convertible)
       if(offer){
         //add offerLogTimeshot
+        console.log("logging")
         createOfferSnapShot(offer, event.logIndex, event.block.timestamp)
 
       }
@@ -65,9 +66,9 @@ export function handleAuctionSettled(event: AuctionSettled): void {
     let seller = getOrCreateAccount(event.params._seller) 
     let bidder = getOrCreateAccount(event.params._bidder) 
     let auctionLog = getAuction(event.params._contractAddress,event.params._tokenId)
-    if(auctionLog !== null){
+    if(auctionLog != null){
      
-      store.remove("AuctionLog",event.params._contractAddress.toHexString().concat('-').concat(event.params._tokenId.toString()))
+      // store.remove("AuctionLog",event.params._contractAddress.toHexString().concat('-').concat(event.params._tokenId.toString()))
       createAuctionSnapShot(auctionLog, event.logIndex, event.block.timestamp)
 
     }
@@ -79,13 +80,17 @@ export function handleAuctionSettled(event: AuctionSettled): void {
 export function handleAuctionBid(event: AuctionBid): void {
   let bidder =  getOrCreateAccount(event.params._bidder)
   let auction = getAuction(event.params._contractAddress, event.params._tokenId)
-  auction.startedAuction = event.params._startedAuction
-  if(bidder){
-    let bid = getOrCreateBid(bidder,event.params._tokenId,event.params._amount, auction)
-    if(bid !== null ){
-      createBidSnapShot(bid,event.logIndex,event.block.timestamp)
+    if(auction != null){
+      auction.startedAuction = event.params._startedAuction
+      if(bidder){
+        let bid = getOrCreateBid(bidder,event.params._tokenId,event.params._amount, auction)
+        if(bid != null ){
+          createBidSnapShot(bid,event.logIndex,event.block.timestamp)
+        }
+      }
     }
-  }
+ 
+
 
 }
 
@@ -93,9 +98,9 @@ export function handleAuctionBid(event: AuctionBid): void {
 
 export function handleCancelAuction(event: CancelAuction): void {
     let auction = getAuction(event.params._contractAddress, event.params._tokenId)
-    if(auction !== null){
+    if(auction != null){
       //handle cancel the action
-      store.remove("AuctionLog",event.params._contractAddress.toHexString().concat('-').concat(event.params._tokenId.toString()))
+      // store.remove("AuctionLog",event.params._contractAddress.toHexString().concat('-').concat(event.params._tokenId.toString()))
       createAuctionSnapShot(auction, event.logIndex, event.block.timestamp)
 
 
@@ -105,8 +110,8 @@ export function handleCancelAuction(event: CancelAuction): void {
 
 export function handleCancelOffer(event: CancelOffer): void {
     let offer = getOffer(event.params._originContract, event.params._tokenId)
-    if(offer !== null){
-      store.remove("offerLog",event.params._originContract.toHexString().concat('-').concat(event.params._tokenId.toString()))
+    if(offer != null){
+      // store.remove("offerLog",event.params._originContract.toHexString().concat('-').concat(event.params._tokenId.toString()))
       createOfferSnapShot(offer,event.logIndex,event.block.timestamp)
     }
 }
@@ -115,8 +120,8 @@ export function handleCancelOffer(event: CancelOffer): void {
 
 export function handleAcceptOffer(event: AcceptOffer): void {
   let offer = getOffer(event.params._originContract, event.params._tokenId)
-  if(offer !== null){
-    store.remove("offerLog",event.params._originContract.toHexString().concat('-').concat(event.params._tokenId.toString()))
+  if(offer != null){
+    // store.remove("offerLog",event.params._originContract.toHexString().concat('-').concat(event.params._tokenId.toString()))
     createOfferSnapShot(offer,event.logIndex,event.block.timestamp)
   }
 }

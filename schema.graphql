@@ -17,7 +17,7 @@ type AuctionLogSnapshot @entity(immutable: true) {
 	contractAddress: Bytes
 	auctionCreator: Account!
 	currencyAddress: Bytes
-	tokenId: BigInt
+	tokenId: BigInt!
 	minimumBid: BigInt
 	seller: Account
 	bidder: Account
@@ -49,7 +49,7 @@ type AuctionLog @entity {
 	contractAddress: Bytes!
 	auctionCreator: Account
 	currencyAddress: Bytes
-	tokenId: BigInt
+	tokenId: BigInt!
 	minimumBid: BigInt
 	seller: Account
 	bidder: Account

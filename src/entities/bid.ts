@@ -7,12 +7,12 @@ export function getOrCreateBid(bidder: Account, tokenId: BigInt, amount: BigInt,
     let bid = BidLog.load(id)
     if(bid == null){
         bid = new BidLog(bidder.address.toHex().concat('-').concat(tokenId.toString()))
-        bid.bidder = bidder.id
-        bid.amount = amount
-        bid.auction = auction.id
+        bid.bidder = bidder.id;
+        bid.amount = amount;
+        bid.auction = auction.id;
         
         bid.save();
     }
-    return bid as BidLog
+    return bid 
 
 }

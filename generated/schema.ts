@@ -238,21 +238,13 @@ export class AuctionLogSnapshot extends Entity {
     }
   }
 
-  get tokenId(): BigInt | null {
+  get tokenId(): BigInt {
     let value = this.get("tokenId");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set tokenId(value: BigInt | null) {
-    if (!value) {
-      this.unset("tokenId");
-    } else {
-      this.set("tokenId", Value.fromBigInt(<BigInt>value));
-    }
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 
   get minimumBid(): BigInt | null {
@@ -654,21 +646,13 @@ export class AuctionLog extends Entity {
     }
   }
 
-  get tokenId(): BigInt | null {
+  get tokenId(): BigInt {
     let value = this.get("tokenId");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set tokenId(value: BigInt | null) {
-    if (!value) {
-      this.unset("tokenId");
-    } else {
-      this.set("tokenId", Value.fromBigInt(<BigInt>value));
-    }
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 
   get minimumBid(): BigInt | null {

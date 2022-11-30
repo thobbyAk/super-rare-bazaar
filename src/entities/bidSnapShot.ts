@@ -8,6 +8,6 @@ export function createBidSnapShot(bidLog: BidLog,index:BigInt, timeStamp:BigInt)
     bidSnapshot.tokenId = bidLog.tokenId
     bidSnapshot.amount = bidLog.amount
     bidSnapshot.timestamp = timeStamp
-    return bidSnapshot as BidLogSnapshot
+    return bidSnapshot
 
 }
