@@ -1,7 +1,7 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { OfferLog, OfferLogSnapshot } from "../../generated/schema";
+import { Offer, OfferLogSnapshot } from "../../generated/schema";
 
-export function createOfferSnapShot(offerLog: OfferLog, index: BigInt, timeStamp: BigInt): OfferLogSnapshot{
+export function createOfferSnapShot(offerLog: Offer, index: BigInt, timeStamp: BigInt): OfferLogSnapshot{
     let offerLogSnapshot = new OfferLogSnapshot(index.toString().concat('-').concat(timeStamp.toString()))
     offerLogSnapshot.amount = offerLog.amount;
     offerLogSnapshot.bidder = offerLog.bidder;

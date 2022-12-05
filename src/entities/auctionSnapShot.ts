@@ -1,7 +1,7 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { AuctionLog, AuctionLogSnapshot } from "../../generated/schema";
+import { Auction, AuctionLogSnapshot } from "../../generated/schema";
 
-export function createAuctionSnapShot(auctionLog: AuctionLog, index: BigInt, timeStamp: BigInt): AuctionLogSnapshot{
+export function createAuctionSnapShot(auctionLog: Auction, index: BigInt, timeStamp: BigInt): AuctionLogSnapshot{
         let auctionLogSnapShot = new AuctionLogSnapshot(index.toString().concat('-').concat(timeStamp.toString()))
         auctionLogSnapShot.amount = auctionLog.amount;
         auctionLogSnapShot.auctionCreator = auctionLog.id;

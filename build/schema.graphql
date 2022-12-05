@@ -3,12 +3,12 @@ type Account @entity {
 	address: Bytes!
 }
 
-type OfferLog @entity {
+type Offer @entity {
 	id: ID!
-	originContract: Bytes
+	originContract: Bytes!
 	seller: Account
 	bidder: Account!
-	amount: BigInt
+	amount: BigInt!
 	tokenId: BigInt!
 	convertible: Boolean
 }
@@ -18,49 +18,49 @@ type AuctionLogSnapshot @entity(immutable: true) {
 	auctionCreator: Account!
 	currencyAddress: Bytes
 	tokenId: BigInt!
-	minimumBid: BigInt
+	minimumBid: BigInt!
 	seller: Account
 	bidder: Account
 	amount: BigInt
 	startedAuction: Boolean
-	timestamp: BigInt
+	timestamp: BigInt!
 }
 
 type OfferLogSnapshot @entity {
 	id: ID!
-	originContract: Bytes
+	originContract: Bytes!
 	seller: Account
 	bidder: Account!
-	amount: BigInt
+	amount: BigInt!
 	tokenId: BigInt!
 	convertible: Boolean
-	timestamp: BigInt
+	timestamp: BigInt!
 }
 type BidLogSnapshot @entity {
 	id: ID!
 	bidder: Account!
-	auction: AuctionLog!
+	auction: Auction!
 	amount: BigInt
 	tokenId: BigInt
 	timestamp: BigInt
 }
-type AuctionLog @entity {
+type Auction @entity {
 	id: ID!
 	contractAddress: Bytes!
-	auctionCreator: Account
-	currencyAddress: Bytes
+	auctionCreator: Account!
+	currencyAddress: Bytes!
 	tokenId: BigInt!
-	minimumBid: BigInt
+	minimumBid: BigInt!
 	seller: Account
 	bidder: Account
 	amount: BigInt
 	startedAuction: Boolean
 }
 
-type BidLog @entity {
+type Bid @entity {
 	id: ID!
 	bidder: Account!
-	auction: AuctionLog!
-	amount: BigInt
-	tokenId: BigInt
+	auction: Auction!
+	amount: BigInt!
+	tokenId: BigInt!
 }

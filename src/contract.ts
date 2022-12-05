@@ -12,7 +12,6 @@ import {
   SetSalePrice,
   Sold
 } from "../generated/Contract/Contract"
-import {OfferLog, AuctionLog, BidLog, OfferLogSnapshot, AuctionLogSnapshot} from "../generated/schema"
 import { getOrCreateAccount } from "./entities/account"
 import { createAuction, getAuction } from "./entities/auction"
 import { createAuctionSnapShot } from "./entities/auctionSnapShot"
@@ -31,7 +30,6 @@ export function handleOfferPlaced(event: OfferPlaced): void {
     let offer = createOffer (event.params._originContract, event.params._tokenId,bidder, event.params._amount, event.params._convertible)
       if(offer){
         //add offerLogTimeshot
-        console.log("logging")
         createOfferSnapShot(offer, event.logIndex, event.block.timestamp)
 
       }

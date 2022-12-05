@@ -1,16 +1,16 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 
-import {  Account, AuctionLog, BidLog} from "../../generated/schema"
+import {  Account, Auction, Bid} from "../../generated/schema"
 
-export function getOrCreateBid(bidder: Account, tokenId: BigInt, amount: BigInt, auction: AuctionLog): BidLog{
+export function getOrCreateBid(bidder: Account, tokenId: BigInt, amount: BigInt, auction: Auction): Bid{
     let id = bidder.address.toHex().concat('-').concat(tokenId.toString())
-    let bid = BidLog.load(id)
+    let bid = Bid.load(id)
     if(bid == null){
-        bid = new BidLog(bidder.address.toHex().concat('-').concat(tokenId.toString()))
+        bid = new Bid(bidder.address.toHex().concat('-').concat(tokenId.toString()))
         bid.bidder = bidder.id;
         bid.amount = amount;
         bid.auction = auction.id;
-        
+        bid.tokenId = tokenId
         bid.save();
     }
     return bid 

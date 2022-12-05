@@ -52,7 +52,7 @@ export class Account extends Entity {
   }
 }
 
-export class OfferLog extends Entity {
+export class Offer extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -60,18 +60,18 @@ export class OfferLog extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save OfferLog entity without an ID");
+    assert(id != null, "Cannot save Offer entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type OfferLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Offer must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("OfferLog", id.toString(), this);
+      store.set("Offer", id.toString(), this);
     }
   }
 
-  static load(id: string): OfferLog | null {
-    return changetype<OfferLog | null>(store.get("OfferLog", id));
+  static load(id: string): Offer | null {
+    return changetype<Offer | null>(store.get("Offer", id));
   }
 
   get id(): string {
@@ -83,21 +83,13 @@ export class OfferLog extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get originContract(): Bytes | null {
+  get originContract(): Bytes {
     let value = this.get("originContract");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set originContract(value: Bytes | null) {
-    if (!value) {
-      this.unset("originContract");
-    } else {
-      this.set("originContract", Value.fromBytes(<Bytes>value));
-    }
+  set originContract(value: Bytes) {
+    this.set("originContract", Value.fromBytes(value));
   }
 
   get seller(): string | null {
@@ -126,21 +118,13 @@ export class OfferLog extends Entity {
     this.set("bidder", Value.fromString(value));
   }
 
-  get amount(): BigInt | null {
+  get amount(): BigInt {
     let value = this.get("amount");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set amount(value: BigInt | null) {
-    if (!value) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
-    }
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
   get tokenId(): BigInt {
@@ -247,21 +231,13 @@ export class AuctionLogSnapshot extends Entity {
     this.set("tokenId", Value.fromBigInt(value));
   }
 
-  get minimumBid(): BigInt | null {
+  get minimumBid(): BigInt {
     let value = this.get("minimumBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set minimumBid(value: BigInt | null) {
-    if (!value) {
-      this.unset("minimumBid");
-    } else {
-      this.set("minimumBid", Value.fromBigInt(<BigInt>value));
-    }
+  set minimumBid(value: BigInt) {
+    this.set("minimumBid", Value.fromBigInt(value));
   }
 
   get seller(): string | null {
@@ -324,21 +300,13 @@ export class AuctionLogSnapshot extends Entity {
     this.set("startedAuction", Value.fromBoolean(value));
   }
 
-  get timestamp(): BigInt | null {
+  get timestamp(): BigInt {
     let value = this.get("timestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt | null) {
-    if (!value) {
-      this.unset("timestamp");
-    } else {
-      this.set("timestamp", Value.fromBigInt(<BigInt>value));
-    }
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
@@ -375,21 +343,13 @@ export class OfferLogSnapshot extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get originContract(): Bytes | null {
+  get originContract(): Bytes {
     let value = this.get("originContract");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set originContract(value: Bytes | null) {
-    if (!value) {
-      this.unset("originContract");
-    } else {
-      this.set("originContract", Value.fromBytes(<Bytes>value));
-    }
+  set originContract(value: Bytes) {
+    this.set("originContract", Value.fromBytes(value));
   }
 
   get seller(): string | null {
@@ -418,21 +378,13 @@ export class OfferLogSnapshot extends Entity {
     this.set("bidder", Value.fromString(value));
   }
 
-  get amount(): BigInt | null {
+  get amount(): BigInt {
     let value = this.get("amount");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set amount(value: BigInt | null) {
-    if (!value) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
-    }
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
   get tokenId(): BigInt {
@@ -453,21 +405,13 @@ export class OfferLogSnapshot extends Entity {
     this.set("convertible", Value.fromBoolean(value));
   }
 
-  get timestamp(): BigInt | null {
+  get timestamp(): BigInt {
     let value = this.get("timestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt | null) {
-    if (!value) {
-      this.unset("timestamp");
-    } else {
-      this.set("timestamp", Value.fromBigInt(<BigInt>value));
-    }
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
@@ -572,7 +516,7 @@ export class BidLogSnapshot extends Entity {
   }
 }
 
-export class AuctionLog extends Entity {
+export class Auction extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -580,18 +524,18 @@ export class AuctionLog extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save AuctionLog entity without an ID");
+    assert(id != null, "Cannot save Auction entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type AuctionLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Auction must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("AuctionLog", id.toString(), this);
+      store.set("Auction", id.toString(), this);
     }
   }
 
-  static load(id: string): AuctionLog | null {
-    return changetype<AuctionLog | null>(store.get("AuctionLog", id));
+  static load(id: string): Auction | null {
+    return changetype<Auction | null>(store.get("Auction", id));
   }
 
   get id(): string {
@@ -612,38 +556,22 @@ export class AuctionLog extends Entity {
     this.set("contractAddress", Value.fromBytes(value));
   }
 
-  get auctionCreator(): string | null {
+  get auctionCreator(): string {
     let value = this.get("auctionCreator");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set auctionCreator(value: string | null) {
-    if (!value) {
-      this.unset("auctionCreator");
-    } else {
-      this.set("auctionCreator", Value.fromString(<string>value));
-    }
+  set auctionCreator(value: string) {
+    this.set("auctionCreator", Value.fromString(value));
   }
 
-  get currencyAddress(): Bytes | null {
+  get currencyAddress(): Bytes {
     let value = this.get("currencyAddress");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set currencyAddress(value: Bytes | null) {
-    if (!value) {
-      this.unset("currencyAddress");
-    } else {
-      this.set("currencyAddress", Value.fromBytes(<Bytes>value));
-    }
+  set currencyAddress(value: Bytes) {
+    this.set("currencyAddress", Value.fromBytes(value));
   }
 
   get tokenId(): BigInt {
@@ -655,21 +583,13 @@ export class AuctionLog extends Entity {
     this.set("tokenId", Value.fromBigInt(value));
   }
 
-  get minimumBid(): BigInt | null {
+  get minimumBid(): BigInt {
     let value = this.get("minimumBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set minimumBid(value: BigInt | null) {
-    if (!value) {
-      this.unset("minimumBid");
-    } else {
-      this.set("minimumBid", Value.fromBigInt(<BigInt>value));
-    }
+  set minimumBid(value: BigInt) {
+    this.set("minimumBid", Value.fromBigInt(value));
   }
 
   get seller(): string | null {
@@ -733,7 +653,7 @@ export class AuctionLog extends Entity {
   }
 }
 
-export class BidLog extends Entity {
+export class Bid extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -741,18 +661,18 @@ export class BidLog extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save BidLog entity without an ID");
+    assert(id != null, "Cannot save Bid entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type BidLog must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Bid must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("BidLog", id.toString(), this);
+      store.set("Bid", id.toString(), this);
     }
   }
 
-  static load(id: string): BidLog | null {
-    return changetype<BidLog | null>(store.get("BidLog", id));
+  static load(id: string): Bid | null {
+    return changetype<Bid | null>(store.get("Bid", id));
   }
 
   get id(): string {
@@ -782,37 +702,21 @@ export class BidLog extends Entity {
     this.set("auction", Value.fromString(value));
   }
 
-  get amount(): BigInt | null {
+  get amount(): BigInt {
     let value = this.get("amount");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set amount(value: BigInt | null) {
-    if (!value) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
-    }
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
-  get tokenId(): BigInt | null {
+  get tokenId(): BigInt {
     let value = this.get("tokenId");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set tokenId(value: BigInt | null) {
-    if (!value) {
-      this.unset("tokenId");
-    } else {
-      this.set("tokenId", Value.fromBigInt(<BigInt>value));
-    }
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 }

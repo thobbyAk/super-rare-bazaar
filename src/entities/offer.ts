@@ -1,11 +1,11 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { Account, OfferLog} from "../../generated/schema"
+import { Account, Offer} from "../../generated/schema"
 
-export function createOffer(originContract:Address, tokenId: BigInt, bidder: Account , amount:BigInt, convertible: boolean):OfferLog{
+export function createOffer(originContract:Address, tokenId: BigInt, bidder: Account , amount:BigInt, convertible: boolean):Offer{
     let id = originContract.toHexString().concat('-').concat(tokenId.toString())
-    let offer = OfferLog.load(id)
+    let offer = Offer.load(id)
         if(offer == null){
-            offer = new OfferLog(originContract.toHex().concat('-').concat(tokenId.toString()))
+            offer = new Offer(originContract.toHex().concat('-').concat(tokenId.toString()))
             offer.originContract = originContract;
             offer.bidder = bidder.id;
             offer.amount = amount;
@@ -17,9 +17,9 @@ export function createOffer(originContract:Address, tokenId: BigInt, bidder: Acc
     return offer
 } 
 
-export function getOffer(originContract:Address, tokenId: BigInt):OfferLog | null{
+export function getOffer(originContract:Address, tokenId: BigInt):Offer | null{
     let id = originContract.toHexString().concat('-').concat(tokenId.toString())
-    let offer = OfferLog.load(id);
+    let offer = Offer.load(id);
 
     return offer
 }
