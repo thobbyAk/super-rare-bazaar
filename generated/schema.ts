@@ -179,21 +179,13 @@ export class AuctionLogSnapshot extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get contractAddress(): Bytes | null {
+  get contractAddress(): Bytes {
     let value = this.get("contractAddress");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set contractAddress(value: Bytes | null) {
-    if (!value) {
-      this.unset("contractAddress");
-    } else {
-      this.set("contractAddress", Value.fromBytes(<Bytes>value));
-    }
+  set contractAddress(value: Bytes) {
+    this.set("contractAddress", Value.fromBytes(value));
   }
 
   get auctionCreator(): string {
@@ -205,21 +197,13 @@ export class AuctionLogSnapshot extends Entity {
     this.set("auctionCreator", Value.fromString(value));
   }
 
-  get currencyAddress(): Bytes | null {
+  get currencyAddress(): Bytes {
     let value = this.get("currencyAddress");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set currencyAddress(value: Bytes | null) {
-    if (!value) {
-      this.unset("currencyAddress");
-    } else {
-      this.set("currencyAddress", Value.fromBytes(<Bytes>value));
-    }
+  set currencyAddress(value: Bytes) {
+    this.set("currencyAddress", Value.fromBytes(value));
   }
 
   get tokenId(): BigInt {
@@ -240,21 +224,13 @@ export class AuctionLogSnapshot extends Entity {
     this.set("minimumBid", Value.fromBigInt(value));
   }
 
-  get seller(): string | null {
+  get seller(): string {
     let value = this.get("seller");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set seller(value: string | null) {
-    if (!value) {
-      this.unset("seller");
-    } else {
-      this.set("seller", Value.fromString(<string>value));
-    }
+  set seller(value: string) {
+    this.set("seller", Value.fromString(value));
   }
 
   get bidder(): string | null {
@@ -464,55 +440,31 @@ export class BidLogSnapshot extends Entity {
     this.set("auction", Value.fromString(value));
   }
 
-  get amount(): BigInt | null {
+  get amount(): BigInt {
     let value = this.get("amount");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set amount(value: BigInt | null) {
-    if (!value) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
-    }
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
-  get tokenId(): BigInt | null {
+  get tokenId(): BigInt {
     let value = this.get("tokenId");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set tokenId(value: BigInt | null) {
-    if (!value) {
-      this.unset("tokenId");
-    } else {
-      this.set("tokenId", Value.fromBigInt(<BigInt>value));
-    }
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 
-  get timestamp(): BigInt | null {
+  get timestamp(): BigInt {
     let value = this.get("timestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt | null) {
-    if (!value) {
-      this.unset("timestamp");
-    } else {
-      this.set("timestamp", Value.fromBigInt(<BigInt>value));
-    }
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
@@ -592,21 +544,13 @@ export class Auction extends Entity {
     this.set("minimumBid", Value.fromBigInt(value));
   }
 
-  get seller(): string | null {
+  get seller(): string {
     let value = this.get("seller");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set seller(value: string | null) {
-    if (!value) {
-      this.unset("seller");
-    } else {
-      this.set("seller", Value.fromString(<string>value));
-    }
+  set seller(value: string) {
+    this.set("seller", Value.fromString(value));
   }
 
   get bidder(): string | null {
@@ -626,8 +570,8 @@ export class Auction extends Entity {
     }
   }
 
-  get amount(): BigInt | null {
-    let value = this.get("amount");
+  get closingAmount(): BigInt | null {
+    let value = this.get("closingAmount");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -635,11 +579,28 @@ export class Auction extends Entity {
     }
   }
 
-  set amount(value: BigInt | null) {
+  set closingAmount(value: BigInt | null) {
     if (!value) {
-      this.unset("amount");
+      this.unset("closingAmount");
     } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
+      this.set("closingAmount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get bids(): Array<string> | null {
+    let value = this.get("bids");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set bids(value: Array<string> | null) {
+    if (!value) {
+      this.unset("bids");
+    } else {
+      this.set("bids", Value.fromStringArray(<Array<string>>value));
     }
   }
 

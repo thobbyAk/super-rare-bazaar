@@ -7,10 +7,11 @@ export function createAuction(contractAddress: Address,auctionCreator:Account, t
     if(auction == null){
         auction = new Auction(contractAddress.toHexString().concat('-').concat(tokenId.toString()))
         auction.auctionCreator = auctionCreator.id;
+        auction.seller = auctionCreator.id;
         auction.contractAddress = contractAddress;
         auction.minimumBid = minimumBid;
         auction.tokenId = tokenId;
-        auction.amount
+        auction.closingAmount
         auction.currencyAddress = currencyAddress;
         auction.save();
     }

@@ -14,14 +14,14 @@ type Offer @entity {
 }
 type AuctionLogSnapshot @entity(immutable: true) {
 	id: ID!
-	contractAddress: Bytes
+	contractAddress: Bytes!
 	auctionCreator: Account!
-	currencyAddress: Bytes
+	currencyAddress: Bytes!
 	tokenId: BigInt!
 	minimumBid: BigInt!
-	seller: Account
+	seller: Account!
 	bidder: Account
-	amount: BigInt
+	amount: BigInt # current auction amount
 	startedAuction: Boolean
 	timestamp: BigInt!
 }
@@ -40,9 +40,9 @@ type BidLogSnapshot @entity {
 	id: ID!
 	bidder: Account!
 	auction: Auction!
-	amount: BigInt
-	tokenId: BigInt
-	timestamp: BigInt
+	amount: BigInt!
+	tokenId: BigInt!
+	timestamp: BigInt!
 }
 type Auction @entity {
 	id: ID!
@@ -51,9 +51,10 @@ type Auction @entity {
 	currencyAddress: Bytes!
 	tokenId: BigInt!
 	minimumBid: BigInt!
-	seller: Account
+	seller: Account! # auction creator is always the seller
 	bidder: Account
-	amount: BigInt
+	closingAmount: BigInt #closing amount
+	bids: [Bid!] @derivedFrom(field: "auction")
 	startedAuction: Boolean
 }
 

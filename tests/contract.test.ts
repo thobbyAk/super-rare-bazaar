@@ -8,17 +8,40 @@ import {
   beforeEach
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
-import { AuctionLog, OfferLog } from "../generated/schema"
+import { Auction, Offer } from "../generated/schema"
 import { AcceptOffer } from "../generated/Contract/Contract"
 import { handleAcceptOffer, handleOfferPlaced } from "../src/contract"
 import { createAcceptOfferEvent } from "./contract-utils"
+import { createHandleOfferPlacedEvent } from "./helper"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
 
+const originContract = Address.fromString("0xa16081f360e3847006db660bae1c6d1b2e17ec2a")
+const bidder1 = Address.fromString("0x0000000000000000000000000000000000000001")
+const bidder2 = Address.fromString("0x0000000000000000000000000000000000000002")
+const seller1 = Address.fromString("0x0000000000000000000000000000000000000003")
+const seller2 = Address.fromString("0x0000000000000000000000000000000000000004")
+const currencyAddress =
+
+
+describe("Test all events created",()=>{
+  describe("handleOfferPlaced Event", () => {
+        test("create offer event",()=>{
+          var offer = createHandleOfferPlacedEvent(
+            originContract,
+            bidder1,
+            BigInt.fromString("1"),
+            BigInt.fromString("2")
+          )
+          handleOfferPlaced(offer);
+        })
+  })
+})
 describe("handleOfferPlaced", () => {
   beforeEach(()=>{
-    let offer = new OfferLog('0xa16081f360e3847006db660bae1c6d1b2e17ec2a'.concat('-').concat(BigInt.fromI32(234).toString()))
+
+    let offer = new Offer('0xa16081f360e3847006db660bae1c6d1b2e17ec2a'.concat('-').concat(BigInt.fromI32(234).toString()))
     offer.amount = BigInt.fromI32(234)
     offer.bidder = '0x0000000000000000000000000000000000000001'
     offer.originContract = Address.fromString("0xa16081f360e3847006db660bae1c6d1b2e17ec2a")
@@ -26,37 +49,7 @@ describe("handleOfferPlaced", () => {
     offer.convertible = true
     offer.save()
   })
-  // beforeAll(() => {
-  //   let _originContract = Address.fromString(
-  //     "0x0000000000000000000000000000000000000001"
-  //   )
-  //   let _bidder = Address.fromString(
-  //     "0x0000000000000000000000000000000000000001"
-  //   )
-  //   let _seller = Address.fromString(
-  //     "0x0000000000000000000000000000000000000001"
-  //   )
-  //   let _currencyAddress = Address.fromString(
-  //     "0x0000000000000000000000000000000000000001"
-  //   )
-  //   let _amount = BigInt.fromI32(234)
-  //   let _tokenId = BigInt.fromI32(234)
-  //   let _splitAddresses = [
-  //     Address.fromString("0x0000000000000000000000000000000000000001")
-  //   ]
-  //   let _splitRatios = [123]
-  //   let newAcceptOfferEvent = createAcceptOfferEvent(
-  //     _originContract,
-  //     _bidder,
-  //     _seller,
-  //     _currencyAddress,
-  //     _amount,
-  //     _tokenId,
-  //     _splitAddresses,
-  //     _splitRatios
-  //   )
-  //   handleAcceptOffer(newAcceptOfferEvent)
-  // })
+
 
   afterAll(() => {
     clearStore()
@@ -65,18 +58,18 @@ describe("handleOfferPlaced", () => {
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("OfferLog created and stored", () => {
-    assert.entityCount("OfferLog", 1)
+  test("Offer created and stored", () => {
+    assert.entityCount("Offer", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(
-      "OfferLog",
+      "Offer",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "originContract",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a"
     )
     assert.fieldEquals(
-      "OfferLog",
+      "Offer",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "bidder",
       "0x0000000000000000000000000000000000000001"
@@ -84,13 +77,13 @@ describe("handleOfferPlaced", () => {
   
 
     assert.fieldEquals(
-      "OfferLog",
+      "Offer",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "amount",
       "234"
     )
     assert.fieldEquals(
-      "OfferLog",
+      "Offer",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "tokenId",
       "234"
@@ -104,8 +97,8 @@ describe("handleOfferPlaced", () => {
 
 describe("handleNewAuction", () => {
   beforeEach(()=>{
-    let auction = new AuctionLog('0xa16081f360e3847006db660bae1c6d1b2e17ec2a'.concat('-').concat(BigInt.fromI32(234).toString()))
-    auction.amount = BigInt.fromI32(234)
+    let auction = new Auction('0xa16081f360e3847006db660bae1c6d1b2e17ec2a'.concat('-').concat(BigInt.fromI32(234).toString()))
+    auction.closingAmount = BigInt.fromI32(234)
     auction.contractAddress = Address.fromString('0xa16081f360e3847006db660bae1c6d1b2e17ec2a')
     auction.auctionCreator = '0x0000000000000000000000000000000000000001'
     auction.minimumBid = BigInt.fromI32(234)
@@ -122,18 +115,18 @@ describe("handleNewAuction", () => {
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("AuctionLog created and stored", () => {
+  test("Auction created and stored", () => {
     assert.entityCount("AuctionLog", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(
-      "AuctionLog",
+      "Auction",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "auctionCreator",
       "0x0000000000000000000000000000000000000001"
     )
     assert.fieldEquals(
-      "AuctionLog",
+      "Auction",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "minimumBid",
       "234"
@@ -141,19 +134,19 @@ describe("handleNewAuction", () => {
   
 
     assert.fieldEquals(
-      "AuctionLog",
+      "Auction",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "amount",
       "234"
     )
     assert.fieldEquals(
-      "AuctionLog",
+      "Auction",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "tokenId",
       "234"
     )
     assert.fieldEquals(
-      "AuctionLog",
+      "Auction",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-234",
       "currencyAddress",
       "0x0000000000000000000000000000000000000001"
