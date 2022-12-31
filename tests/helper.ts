@@ -11,7 +11,7 @@ export const superRareBazaarAddress1 = Address.fromString(
     "0x0000000000000000000000000000000000000000"
   );
 
-export function createHandleOfferPlacedEvent(
+export function createOfferPlacedEvent(
     originContract: Address,
     bidder: Address,
     tokenId: BigInt,
@@ -40,7 +40,7 @@ export function createHandleOfferPlacedEvent(
 
 }
 
-export function createHandleNewAuction(
+export function createNewAuctionEvent(
     contractAddress: Address,
     startTime: BigInt,
     auctionCreator: Address,
@@ -70,7 +70,7 @@ export function createHandleNewAuction(
     return newAuctionEvent
 }
 
-export function createHandleNewBid(
+export function createNewBidEvent(
     contractAddress: Address,
     bidder: Address,
     previousBidder: Address,
